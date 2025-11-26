@@ -1,0 +1,63 @@
+{
+  "source_files": {
+    "database.py": "1f9ff9a9235d0e5b",
+    "main.py": "777685089434e19a",
+    "routers/auth.py": "f0e30af16a3b6748",
+    "routers/orders.py": "44148bd04fbc42f9",
+    "routers/products.py": "5a1c27a6821d304e",
+    "routers/cart.py": "c8ce37cdb7c041d4",
+    "models/schemas.py": "fe5c3eebe42f5691",
+    "models/db_models.py": "05e4103d851031b3"
+  },
+  "test_mapping": {
+    "routers/products.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "database.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "routers/cart.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "models/db_models.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "routers/auth.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "main.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "routers/orders.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ],
+    "models/schemas.py": [
+      "test_unit_20251123_215843_01.py",
+      "test_integ_20251123_215843_01.py",
+      "test_integ_20251123_215843_02.py",
+      "test_e2e_20251123_215843_01.py"
+    ]
+  },
+  "generated_at": 1763935351.3095765
+}

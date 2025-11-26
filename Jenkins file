@@ -1,0 +1,69 @@
+pipeline {
+    agent any
+
+    environment {
+        ACR_NAME = "prasadacr"
+        ACR_LOGIN_SERVER = "prasadacr.azurecr.io"
+        AKS_RG = "prasad-rg"
+        AKS_CLUSTER = "prasad-aks"
+        IMAGE_NAME = "backend"
+        DOCKER_CREDENTIALS = credentials('acr-creds') // Jenkins credential with ACR username/password
+    }
+
+    stages {
+        stage('Checkout Backend') {
+            steps {
+                git branch: 'main',
+                    credentialsId: 'github-creds',      // Use GitHub PAT here
+                    url: 'https://github.com/DeviPrasad372002/backend_code.git'
+            }
+        }
+
+        stage('Login to ACR') {
+            steps {
+                sh "echo ${DOCKER_CREDENTIALS_PSW} | docker login ${ACR_LOGIN_SERVER} -u ${DOCKER_CREDENTIALS_USR} --password-stdin"
+            }
+        }
+
+        stage('Build & Push Backend Image') {
+            steps {
+                script {
+                    def imageTag = "${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${BUILD_NUMBER}"
+                    sh "docker build -t ${imageTag} ."
+                    sh "docker push ${imageTag}"
+                    env.BACKEND_TAG = imageTag
+                }
+            }
+        }
+
+        stage('Deploy Backend to AKS') {
+            steps {
+                script {
+                    sh """
+                    az aks get-credentials --resource-group ${AKS_RG} --name ${AKS_CLUSTER} --overwrite-existing
+
+                    if kubectl get deployment backend > /dev/null 2>&1; then
+                        echo "🔄 Updating existing backend deployment..."
+                        kubectl set image deployment/backend backend-image=${BACKEND_TAG} --record
+                    else
+                        echo "🚀 First-time backend deploy: applying manifests..."
+                        kubectl apply -f ./deployment-backend.yaml
+                        kubectl set image deployment/backend backend-image=${BACKEND_TAG} --record
+                    fi
+
+                    kubectl rollout status deployment/backend
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "✅ Backend deployed successfully"
+        }
+        failure {
+            echo "❌ Backend pipeline failed"
+        }
+    }
+}
